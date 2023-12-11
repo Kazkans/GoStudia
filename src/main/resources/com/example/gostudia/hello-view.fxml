@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gostudia.HelloController">
     <children>
-        <Pane fx:id="pane" prefHeight="366.0" prefWidth="600.0">
-            <children>
-            </children></Pane>
-      <HBox alignment="CENTER" prefHeight="49.0" prefWidth="640.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" text="Pass" />
-              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Connect" textAlignment="CENTER" />
+            <Label fx:id="colorLabel">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font></Label>
+         </children>
+      </HBox>
+        <Pane fx:id="pane" prefHeight="700.0" prefWidth="640.0" />
+      <HBox alignment="CENTER" prefHeight="28.0" prefWidth="640.0">
+         <children>
+            <Button fx:id="passBut" mnemonicParsing="false" onAction="#handlePassAction" text="Pass" />
+              <Button fx:id="connectBut" mnemonicParsing="false" onAction="#handelConnectAction" text="Connect" />
          </children>
       </HBox>
     </children>

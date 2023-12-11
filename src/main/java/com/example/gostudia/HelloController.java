@@ -1,7 +1,9 @@
 package com.example.gostudia;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -11,21 +13,19 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class HelloController implements Initializable{
     @FXML
     private Pane pane;
-    /**
-     * Function called on initialization
-     *
-     * Function on init, reads log config and sets pane clip(so shapes don't clip to menu)
-     * @return void
-     */
+    @FXML
+    private Label colorLabel;
+
     float marginY=40f;
     float marginX=200f;
 
     float cellSize=30f;
-    private PrintWriter out;
+    private PrintWriter out = null;
     private BufferedReader in;
     private ObjectInputStream ois;
 
@@ -64,14 +64,15 @@ public class HelloController implements Initializable{
             createVLine(marginX+i*cellSize);
             createHLine(marginY+i*cellSize);
         }
+    }
+
+    public void createFields() {
         for(int i=0;i<19;i++) {
             for (int j = 0; j < 19; j++) {
                 createButton(marginX + i * cellSize, marginY + j * cellSize, i, j);
             }
         }
-
     }
-
     public void connect() {
         try  {
             Socket socket = new Socket("localhost", 4444);
@@ -90,8 +91,30 @@ public class HelloController implements Initializable{
         }
     }
 
+    public void handlePassAction(ActionEvent actionEvent) {
+        if(out!=null)
+            out.println("pass");
+    }
+
     /**
-     * Updates the board upon input form server
+     * Waits for input from server and sets label to color which got
+     */
+    public void setColorLabel() {
+        Scanner scan = new Scanner(in);
+        String inputStr = scan.nextLine().strip();
+        colorLabel.setText(inputStr);
+    }
+    public void handelConnectAction(ActionEvent actionEvent) {
+        if(out==null) {
+            connect();
+            setColorLabel();
+            createFields();
+            (new UpdateServerThread()).start();
+        }
+    }
+
+    /**
+     * Thread to updates the board upon input form server
      */
     public class UpdateServerThread extends Thread {
         public void run() {
@@ -101,21 +124,23 @@ public class HelloController implements Initializable{
                     for(int i=0;i<19;i++) {
                         for(int j=0;j<19;j++) {
                             board[i][j].update(stateBoard[i][j]);
-                            if(stateBoard[i][j]==StateField.BLACK)
-                                System.out.println("Black:"+i+" "+j);
                         }
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("Got new!!");
             }
         }
     }
+
+    /**
+     * Function called on initialization
+     *
+     * Function on init creates empty board
+     * @return void
+     */
     @Override
     public void initialize(URL location, ResourceBundle rb) {
-        connect();
-        (new UpdateServerThread()).start();
         createBoard();
     }
 

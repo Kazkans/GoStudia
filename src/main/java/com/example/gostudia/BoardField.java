@@ -5,6 +5,9 @@ import javafx.scene.shape.Circle;
 
 import java.io.PrintWriter;
 
+/**
+ * Class represents one board field. It handles sending info upon clicking and drawing it.
+ */
 public class BoardField extends Circle {
     StateField stateField;
     public BoardField(int i, int j, PrintWriter out) {

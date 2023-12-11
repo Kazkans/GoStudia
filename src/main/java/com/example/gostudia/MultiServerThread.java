@@ -8,12 +8,11 @@ public class MultiServerThread {
     public enum Color {WHITE, BLACK}
     private static StateField[][] board = new StateField[19][19];
 
+    public static int consecutivePassess=0;
     public static void main(String[] args) {
-        Socket black_socket = null;
         SocketStreams blackStreams = null;
         SocketStreams whiteStreams = null;
 
-        Socket white_socket = null;
         initBoard();
 
         try (ServerSocket serverSocket = new ServerSocket(4444)) {
@@ -26,9 +25,11 @@ public class MultiServerThread {
                 if(blackStreams == null) {
                     System.out.println("Black connected");
                     blackStreams = new SocketStreams(socket);
+                    blackStreams.out.println("You are black colour");
                 } else if(whiteStreams == null) {
                     System.out.println("White connected");
                     whiteStreams = new SocketStreams(socket);
+                    whiteStreams.out.println("You are white colour");
                 }
                 if(blackStreams!=null && whiteStreams!=null)
                     startGame(blackStreams, whiteStreams);
@@ -63,12 +64,18 @@ public class MultiServerThread {
                 String inputStr = scan.nextLine().strip();
                 System.out.println(inputStr);
                 if (inputStr.equals("pass")) {
-                    System.out.println("pass");
+                    System.out.println("pass: " + color);
+                    consecutivePassess+=1;
+                    if(consecutivePassess==2) {
+                      //  endGame();
+                    }
                 } else {
+                    consecutivePassess=0;
                     String[] inputs = inputStr.split(" ");
                     int x = Integer.parseInt(inputs[0]);
                     int y = Integer.parseInt(inputs[1]);
                     System.out.println("list: " + color + " " + x + " " + y);
+
                     board[x][y] = color;
                     mainStreams.oos.writeObject(board);
                     sideStreams.oos.writeObject(board);
