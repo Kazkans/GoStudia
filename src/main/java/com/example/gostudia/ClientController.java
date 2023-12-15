@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class HelloController implements Initializable{
+public class ClientController implements Initializable{
     @FXML
     private Pane pane;
     @FXML
@@ -91,7 +91,7 @@ public class HelloController implements Initializable{
         }
     }
 
-    public void handlePassAction(ActionEvent actionEvent) {
+    public void handlePassAction() {
         if(out!=null)
             out.println("pass");
     }
@@ -104,7 +104,7 @@ public class HelloController implements Initializable{
         String inputStr = scan.nextLine().strip();
         colorLabel.setText(inputStr);
     }
-    public void handelConnectAction(ActionEvent actionEvent) {
+    public void handelConnectAction() {
         if(out==null) {
             connect();
             setColorLabel();
@@ -138,7 +138,7 @@ public class HelloController implements Initializable{
      *
      * Function on init creates empty board
      * @return void
-     */
+     **/
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         createBoard();

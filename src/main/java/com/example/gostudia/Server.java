@@ -5,7 +5,6 @@ import java.net.*;
 import java.util.Scanner;
 
 public class Server {
-    public enum Color {WHITE, BLACK}
     private static StateField[][] board = new StateField[19][19];
 
     public static int consecutivePassess=0;

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gostudia.HelloController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gostudia.ClientController">
     <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -20,8 +20,8 @@
         <Pane fx:id="pane" prefHeight="700.0" prefWidth="640.0" />
       <HBox alignment="CENTER" prefHeight="28.0" prefWidth="640.0">
          <children>
-            <Button fx:id="passBut" mnemonicParsing="false" onAction="#handlePassAction" text="Pass" />
-              <Button fx:id="connectBut" mnemonicParsing="false" onAction="#handelConnectAction" text="Connect" />
+            <Button mnemonicParsing="false" onAction="#handlePassAction" text="Pass" />
+              <Button mnemonicParsing="false" onAction="#handelConnectAction" text="Connect" />
          </children>
       </HBox>
     </children>
