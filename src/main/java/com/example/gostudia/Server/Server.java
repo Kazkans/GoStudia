@@ -1,4 +1,6 @@
-package com.example.gostudia;
+package com.example.gostudia.Server;
+
+import com.example.gostudia.StateField;
 
 import java.io.*;
 import java.net.*;

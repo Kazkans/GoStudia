@@ -1,4 +1,4 @@
-package com.example.gostudia;
+package com.example.gostudia.Client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Second client for testing purpose
+ * Main Client
  */
-public class App2 extends Application {
+public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));

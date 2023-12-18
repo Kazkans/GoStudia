@@ -1,4 +1,4 @@
-package com.example.gostudia;
+package com.example.gostudia.Server;
 
 import java.io.*;
 import java.net.Socket;

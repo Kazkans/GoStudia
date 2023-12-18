@@ -1,6 +1,6 @@
-package com.example.gostudia;
+package com.example.gostudia.Client;
 
-import javafx.event.ActionEvent;
+import com.example.gostudia.StateField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

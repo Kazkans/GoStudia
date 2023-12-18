@@ -1,5 +1,6 @@
-package com.example.gostudia;
+package com.example.gostudia.Client;
 
+import com.example.gostudia.StateField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
