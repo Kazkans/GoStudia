@@ -39,20 +39,18 @@ public class Board {
         }
     }
 
-    public void place(int x, int y, StateField state) {
+    public boolean place(int x, int y, StateField state) {
         if (state != StateField.EMPTY) {
             if (board[x][y].getState() == StateField.EMPTY) {
 
-                StateField[][] temp = new StateField[size][size];
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < size; j++) {
-                        temp[i][j] = board[i][j].getState();
-                    }
-                }
+                StateField[][] temp = getBoard();
 
                 int points = board[x][y].setState(state);
+
+                // Suicide prevention
                 if (!board[x][y].hasBreaths()) {
                     board[x][y].setState(StateField.EMPTY);
+                    return false;
                 }
 
                 // Ko rule check
@@ -69,7 +67,9 @@ public class Board {
                 }
 
                 if (ko) {
+                    // Ko prevention
                     board[koMove.getX()][koMove.getY()].setState(koMove.getState());
+                    return false;
                 }
                 else {
                     koMove.set(x, y, state);
@@ -80,10 +80,12 @@ public class Board {
                 }
             }
             else
-                throw new IllegalStateException("Cannot replace stones");
+                return false;
         }
         else
             throw new IllegalStateException("Cannot remove stones from board");
+
+        return true;
     }
 
     public Field getField(int x, int y) {
@@ -97,5 +99,15 @@ public class Board {
 
     public int getSize() {
         return size;
+    }
+
+    public StateField[][] getBoard() {
+        StateField[][] temp = new StateField[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                temp[i][j] = board[i][j].getState();
+            }
+        }
+        return temp;
     }
 }

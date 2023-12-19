@@ -1,5 +1,6 @@
 package com.example.gostudia.Server;
 
+import com.example.gostudia.Logic.Board;
 import com.example.gostudia.StateField;
 
 import java.io.*;
@@ -7,14 +8,12 @@ import java.net.*;
 import java.util.Scanner;
 
 public class Server {
-    private static StateField[][] board = new StateField[19][19];
+    private static Board board = new Board(19);
 
     public static int consecutivePassess=0;
     public static void main(String[] args) {
         SocketStreams blackStreams = null;
         SocketStreams whiteStreams = null;
-
-        initBoard();
 
         try (ServerSocket serverSocket = new ServerSocket(4444)) {
 
@@ -41,13 +40,6 @@ public class Server {
             ex.printStackTrace();
         }
     }
-    public static void initBoard() {
-        for(int i=0;i<19;i++) {
-            for(int j=0;j<19;j++) {
-                board[i][j] = StateField.EMPTY;
-            }
-        }
-    }
 
     public static void startGame(SocketStreams blackStreams, SocketStreams whiteStreams) {
         while(true) {
@@ -71,15 +63,16 @@ public class Server {
                       //  endGame();
                     }
                 } else {
-                    consecutivePassess=0;
+                    consecutivePassess = 0;
                     String[] inputs = inputStr.split(" ");
                     int x = Integer.parseInt(inputs[0]);
                     int y = Integer.parseInt(inputs[1]);
                     System.out.println("list: " + color + " " + x + " " + y);
 
-                    board[x][y] = color;
-                    mainStreams.oos.writeObject(board);
-                    sideStreams.oos.writeObject(board);
+                    if (!board.place(x, y, color))
+                        continue;
+                    mainStreams.oos.writeObject(board.getBoard());
+                    sideStreams.oos.writeObject(board.getBoard());
                     mainStreams.oos.reset();
                     sideStreams.oos.reset();
 

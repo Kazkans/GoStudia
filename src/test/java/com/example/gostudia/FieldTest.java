@@ -17,8 +17,7 @@ public class FieldTest {
         assertEquals(StateField.BLACK, board.getField(3,3).getState());
         assertEquals(StateField.WHITE, board.getField(4,3).getState());
 
-        assertThrows(IllegalStateException.class,
-                () -> board.place(3,3, StateField.BLACK));
+        assertFalse(board.place(3, 3, StateField.BLACK));
         assertThrows(IllegalStateException.class,
                 () -> board.place(3,3, StateField.EMPTY));
     }
@@ -43,14 +42,16 @@ public class FieldTest {
     public void testSuicide() {
         Board board = new Board(9);
         multiplePlace(board, StateField.BLACK,
-                3, 3, 4, 4, 3, 5, 2, 4);
+                3, 3, 4, 3, 5, 4, 4, 5, 3, 5, 2, 4);
+        board.place(3,4, StateField.WHITE);
         printBoard(board);
 
-        board.place(3,4, StateField.WHITE);
-        assertEquals(StateField.EMPTY, board.getField(3,4).getState());
+        board.place(4,4, StateField.WHITE);
+        board.place(4,4, StateField.WHITE);
+        assertEquals(StateField.EMPTY, board.getField(4,4).getState());
 
-        board.place(3, 4, StateField.BLACK);
-        assertEquals(StateField.BLACK, board.getField(3,4).getState());
+        board.place(4, 4, StateField.BLACK);
+        assertEquals(StateField.BLACK, board.getField(4,4).getState());
     }
 
     @Test

@@ -47,8 +47,8 @@ public class Field {
         throw new IllegalStateException("Empty field cannot be removed");
     }
 
-    public int update() {
-        if (state != StateField.EMPTY && !hasBreaths())
+    public int update(StateField state) {
+        if (this.state == state && !hasBreaths())
             return remove();
         return 0;
     }
@@ -58,7 +58,7 @@ public class Field {
         if (state != StateField.EMPTY) {
             int sum = 0;
             for (Field neighbour : neighbours) {
-                sum += neighbour.update();
+                sum += neighbour.update(state.opposite());
             }
             return sum;
         }
