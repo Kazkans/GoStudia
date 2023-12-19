@@ -47,14 +47,22 @@ public class Field {
         throw new IllegalStateException("Empty field cannot be removed");
     }
 
-    public void update() {
+    public int update() {
         if (state != StateField.EMPTY && !hasBreaths())
-            remove();
+            return remove();
+        return 0;
     }
 
-    public void setState(StateField state) {
+    public int setState(StateField state) {
         this.state = state;
-        neighbours.forEach(Field::update);
+        if (state != StateField.EMPTY) {
+            int sum = 0;
+            for (Field neighbour : neighbours) {
+                sum += neighbour.update();
+            }
+            return sum;
+        }
+        return 0;
     }
 
     public StateField getState() {

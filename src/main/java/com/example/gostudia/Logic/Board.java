@@ -37,7 +37,10 @@ public class Board {
     public void place(int x, int y, StateField state) {
         if (state != StateField.EMPTY) {
             if (board[x][y].getState() == StateField.EMPTY) {
-                board[x][y].setState(state);
+                int points = board[x][y].setState(state);
+                if (!board[x][y].hasBreaths()) {
+                    board[x][y].setState(StateField.EMPTY);
+                }
             }
             else
                 throw new IllegalStateException("Cannot replace stones");

@@ -51,4 +51,40 @@ public class FieldTest {
         assertEquals(StateField.WHITE, board.getField(4,5).getState());
         assertEquals(StateField.WHITE, board.getField(3,4).getState());
     }
+
+    @Test
+    public void testSuicide() {
+        Board board = new Board(9);
+        board.place(3,3, StateField.BLACK);
+        board.place(4,4, StateField.BLACK);
+        board.place(3,5, StateField.BLACK);
+        board.place(2,4, StateField.BLACK);
+        board.print();
+
+        board.place(3,4, StateField.WHITE);
+        assertEquals(StateField.EMPTY, board.getField(3,4).getState());
+
+        board.place(3, 4, StateField.BLACK);
+        assertEquals(StateField.BLACK, board.getField(3,4).getState());
+    }
+
+    @Test
+    public void testKillAndSurvive() {
+        Board board = new Board(9);
+        board.place(0,1, StateField.BLACK);
+        board.place(1,1, StateField.BLACK);
+        board.place(1,0, StateField.BLACK);
+
+        board.place(2,0, StateField.WHITE);
+        board.place(2,1, StateField.WHITE);
+        board.place(0,2, StateField.WHITE);
+        board.place(1,2, StateField.WHITE);
+        board.print();
+
+        board.place(0,0, StateField.WHITE);
+        assertEquals(StateField.WHITE, board.getField(0,0).getState());
+        assertEquals(StateField.EMPTY, board.getField(0,1).getState());
+        assertEquals(StateField.EMPTY, board.getField(1,1).getState());
+        assertEquals(StateField.EMPTY, board.getField(1,0).getState());
+    }
 }

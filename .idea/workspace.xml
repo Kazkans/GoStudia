@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab0c7efa-862e-4ff1-9bbd-c3ad8146f7c2" name="Changes" comment="Renamed HelloController to ClientController">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" afterDir="false" />
+    <list default="true" id="ab0c7efa-862e-4ff1-9bbd-c3ad8146f7c2" name="Changes" comment="Added chain detection">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,14 +64,17 @@
   "keyToString": {
     "Application.App.executor": "Run",
     "Application.Server.executor": "Debug",
-    "JUnit.FieldTest.testChain.executor": "Run",
+    "JUnit.FieldTest.executor": "Run",
+    "JUnit.FieldTest.testChain.executor": "Debug",
+    "JUnit.FieldTest.testKillAndSurvive.executor": "Run",
     "JUnit.FieldTest.testPlace.executor": "Run",
+    "JUnit.FieldTest.testSuicide.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "logic",
-    "last_opened_file_path": "C:/Users/bajon/projekty/Java 2SEM/GoStudia",
+    "last_opened_file_path": "C:/Users/koncz/Desktop/Labolatorium/Semestr 3/Technologia Programowania/Laby/Lista 3/designpatterns/trunk/state",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,29 +97,18 @@
       <recent name="com.example.gostudia" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.FieldTest.testChain">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.gostudia.Client.App" />
+  <component name="RunManager" selected="JUnit.FieldTest.testKillAndSurvive">
+    <configuration name="FieldTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GoStudia" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.gostudia.Client.*" />
+          <option name="PATTERN" value="com.example.gostudia.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.gostudia.Server.Server" />
-      <module name="GoStudia" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.gostudia.Server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="PACKAGE_NAME" value="com.example.gostudia" />
+      <option name="MAIN_CLASS_NAME" value="com.example.gostudia.FieldTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -132,6 +124,22 @@
       <option name="PACKAGE_NAME" value="com.example.gostudia" />
       <option name="MAIN_CLASS_NAME" value="com.example.gostudia.FieldTest" />
       <option name="METHOD_NAME" value="testChain" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FieldTest.testKillAndSurvive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GoStudia" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.gostudia.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.gostudia" />
+      <option name="MAIN_CLASS_NAME" value="com.example.gostudia.FieldTest" />
+      <option name="METHOD_NAME" value="testKillAndSurvive" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -153,18 +161,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FieldTest.testSuicide" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GoStudia" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.gostudia.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.gostudia" />
+      <option name="MAIN_CLASS_NAME" value="com.example.gostudia.FieldTest" />
+      <option name="METHOD_NAME" value="testSuicide" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="Application.App" />
-      <item itemvalue="Application.Server" />
+      <item itemvalue="JUnit.FieldTest" />
       <item itemvalue="JUnit.FieldTest.testChain" />
+      <item itemvalue="JUnit.FieldTest.testKillAndSurvive" />
       <item itemvalue="JUnit.FieldTest.testPlace" />
+      <item itemvalue="JUnit.FieldTest.testSuicide" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.FieldTest.testKillAndSurvive" />
+        <item itemvalue="JUnit.FieldTest" />
+        <item itemvalue="JUnit.FieldTest.testSuicide" />
         <item itemvalue="JUnit.FieldTest.testChain" />
         <item itemvalue="JUnit.FieldTest.testPlace" />
-        <item itemvalue="Application.App" />
-        <item itemvalue="Application.Server" />
       </list>
     </recent_temporary>
   </component>
@@ -205,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702650833564</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added chain detection">
+      <option name="closed" value="true" />
+      <created>1702995925963</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702995925963</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,6 +273,7 @@
     <MESSAGE value="Added showing info which color is client and added some more docs" />
     <MESSAGE value="Renamed MultiServerThread to Server" />
     <MESSAGE value="Renamed HelloController to ClientController" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renamed HelloController to ClientController" />
+    <MESSAGE value="Added chain detection" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added chain detection" />
   </component>
 </project>
