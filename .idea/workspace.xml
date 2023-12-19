@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab0c7efa-862e-4ff1-9bbd-c3ad8146f7c2" name="Changes" comment="Renamed HelloController to ClientController">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/App2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/BoardField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/BoardField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/SocketStreams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Server/SocketStreams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/gostudia/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/gostudia/Client/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +23,26 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "JarJarIsMyLord"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="6d26bf65-d391-47d1-a991-4052df72391e" />
+        <option name="url" value="https://github.com/Kazkans/GoStudia.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -51,6 +64,8 @@
   "keyToString": {
     "Application.App.executor": "Run",
     "Application.Server.executor": "Debug",
+    "JUnit.FieldTest.testChain.executor": "Run",
+    "JUnit.FieldTest.testPlace.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -79,7 +94,7 @@
       <recent name="com.example.gostudia" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="JUnit.FieldTest.testChain">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.gostudia.Client.App" />
       <module name="GoStudia" />
@@ -106,17 +121,54 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FieldTest.testChain" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GoStudia" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.gostudia.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.gostudia" />
+      <option name="MAIN_CLASS_NAME" value="com.example.gostudia.FieldTest" />
+      <option name="METHOD_NAME" value="testChain" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FieldTest.testPlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GoStudia" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.gostudia.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.gostudia" />
+      <option name="MAIN_CLASS_NAME" value="com.example.gostudia.FieldTest" />
+      <option name="METHOD_NAME" value="testPlace" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.App" />
       <item itemvalue="Application.Server" />
+      <item itemvalue="JUnit.FieldTest.testChain" />
+      <item itemvalue="JUnit.FieldTest.testPlace" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.FieldTest.testChain" />
+        <item itemvalue="JUnit.FieldTest.testPlace" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.Server" />
       </list>
     </recent_temporary>
   </component>
+  <component name="ShelveChangesManager" show_recycled="true" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -164,7 +216,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="logic" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
