@@ -4,6 +4,8 @@ import com.example.gostudia.StateField;
 
 public class Board {
     private Field[][] board;
+    private StateField[][] koBoard;
+    private Move koMove;
     private int size;
 
     public Board(int size) {
@@ -13,12 +15,15 @@ public class Board {
             throw new IllegalArgumentException("Board size has to be even");
 
         this.size = size;
+        koMove = new Move();
 
         // Initialise fields
         board = new Field[size][size];
+        koBoard = new StateField[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 board[i][j] = new Field();
+                koBoard[i][j] = StateField.EMPTY;
             }
         }
 
@@ -37,9 +42,41 @@ public class Board {
     public void place(int x, int y, StateField state) {
         if (state != StateField.EMPTY) {
             if (board[x][y].getState() == StateField.EMPTY) {
+
+                StateField[][] temp = new StateField[size][size];
+                for (int i = 0; i < size; i++) {
+                    for (int j = 0; j < size; j++) {
+                        temp[i][j] = board[i][j].getState();
+                    }
+                }
+
                 int points = board[x][y].setState(state);
                 if (!board[x][y].hasBreaths()) {
                     board[x][y].setState(StateField.EMPTY);
+                }
+
+                // Ko rule check
+                boolean ko = true;
+                for (int i = 0; i < size; i++) {
+                    for (int j = 0; j < size; j++) {
+                        if (!board[i][j].getState().equals(koBoard[i][j])) {
+                            ko = false;
+                            break;
+                        }
+                    }
+                    if (!ko)
+                        break;
+                }
+
+                if (ko) {
+                    board[koMove.getX()][koMove.getY()].setState(koMove.getState());
+                }
+                else {
+                    koMove.set(x, y, state);
+
+                    for (int i = 0; i < size; i++) {
+                        System.arraycopy(temp[i], 0, koBoard[i], 0, size);
+                    }
                 }
             }
             else
@@ -58,17 +95,7 @@ public class Board {
         }
     }
 
-    public void print() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                switch (board[j][i].getState()) {
-                    case BLACK -> System.out.print("X");
-                    case WHITE -> System.out.print("O");
-                    case EMPTY -> System.out.print("_");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
+    public int getSize() {
+        return size;
     }
 }

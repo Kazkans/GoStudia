@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab0c7efa-862e-4ff1-9bbd-c3ad8146f7c2" name="Changes" comment="Added chain detection">
+    <list default="true" id="ab0c7efa-862e-4ff1-9bbd-c3ad8146f7c2" name="Changes" comment="Added suicide prevention">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Move.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/gostudia/TestUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +66,7 @@
     "Application.App.executor": "Run",
     "Application.Server.executor": "Debug",
     "JUnit.FieldTest.executor": "Run",
-    "JUnit.FieldTest.testChain.executor": "Debug",
+    "JUnit.FieldTest.testChain.executor": "Run",
     "JUnit.FieldTest.testKillAndSurvive.executor": "Run",
     "JUnit.FieldTest.testPlace.executor": "Run",
     "JUnit.FieldTest.testSuicide.executor": "Run",
@@ -97,7 +98,7 @@
       <recent name="com.example.gostudia" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.FieldTest.testKillAndSurvive">
+  <component name="RunManager" selected="JUnit.FieldTest">
     <configuration name="FieldTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GoStudia" />
       <extension name="coverage">
@@ -186,10 +187,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.FieldTest.testKillAndSurvive" />
         <item itemvalue="JUnit.FieldTest" />
-        <item itemvalue="JUnit.FieldTest.testSuicide" />
         <item itemvalue="JUnit.FieldTest.testChain" />
+        <item itemvalue="JUnit.FieldTest.testKillAndSurvive" />
+        <item itemvalue="JUnit.FieldTest.testSuicide" />
         <item itemvalue="JUnit.FieldTest.testPlace" />
       </list>
     </recent_temporary>
@@ -239,7 +240,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702995925963</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added suicide prevention">
+      <option name="closed" value="true" />
+      <created>1703002070173</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1703002070173</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,6 +283,7 @@
     <MESSAGE value="Renamed MultiServerThread to Server" />
     <MESSAGE value="Renamed HelloController to ClientController" />
     <MESSAGE value="Added chain detection" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added chain detection" />
+    <MESSAGE value="Added suicide prevention" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added suicide prevention" />
   </component>
 </project>
