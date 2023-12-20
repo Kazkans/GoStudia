@@ -51,6 +51,7 @@ public class Server {
         try {
             // skips bytes that were sent before turn
             mainStreams.input.skip(mainStreams.input.available());
+            mainStreams.oos.writeObject(new Signal(true));
 
             Scanner scan = new Scanner(mainStreams.input);
             while (true) {
@@ -62,6 +63,7 @@ public class Server {
                     if(consecutivePassess==2) {
                       //  endGame();
                     }
+                    return;
                 } else {
                     consecutivePassess = 0;
                     String[] inputs = inputStr.split(" ");
@@ -71,10 +73,13 @@ public class Server {
 
                     if (!board.place(x, y, color))
                         continue;
-                    mainStreams.oos.writeObject(board.getBoard());
-                    sideStreams.oos.writeObject(board.getBoard());
-                    mainStreams.oos.reset();
-                    sideStreams.oos.reset();
+
+                    Signal s = new Signal(board.getBoard());
+
+                    mainStreams.oos.writeObject(s);
+                    sideStreams.oos.writeObject(s);
+
+                    mainStreams.oos.writeObject(new Signal(false));
 
                     return;
                 }

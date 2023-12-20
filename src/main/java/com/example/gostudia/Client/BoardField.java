@@ -11,10 +11,10 @@ import java.io.PrintWriter;
  */
 public class BoardField extends Circle {
     StateField stateField;
-    public BoardField(int i, int j, PrintWriter out) {
+    public BoardField(int i, int j, ClientHandler cm) {
         this.setOnMouseClicked(event ->  {
             // sends signal
-            out.println(i +" "+ j);
+            cm.sendMove(i, j);
         });
     }
     public void update(StateField s) {

@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab0c7efa-862e-4ff1-9bbd-c3ad8146f7c2" name="Changes" comment="Added Ko prevention">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/ClientHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Server/Signal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Logic/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/BoardField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/BoardField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Client/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gostudia/StateField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gostudia/StateField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/gostudia/FieldTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/gostudia/Client/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/gostudia/Client/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +34,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JarJarIsMyLord"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JarJarIsMyLord&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -75,12 +77,14 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "logic",
-    "last_opened_file_path": "C:/Users/koncz/Desktop/Labolatorium/Semestr 3/Technologia Programowania/Laby/Lista 3/designpatterns/trunk/state",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Bartłomiej/Downloads/asd/GoStudia-master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -96,10 +100,11 @@
       <recent name="com.example.gostudia" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.gostudia.Server" />
       <recent name="com.example.gostudia" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.FieldTest.testSuicide">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="App" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.gostudia.Client.App" />
       <module name="GoStudia" />
@@ -182,13 +187,20 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.FieldTest.testSuicide" />
-        <item itemvalue="Application.App" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="JUnit.FieldTest.testSuicide" />
         <item itemvalue="JUnit.FieldTest" />
         <item itemvalue="JUnit.FieldTest.testChain" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-corretto-21.0.1-3183f394aec4-3b9d21dd" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="ShelveChangesManager" show_recycled="true" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -202,6 +214,9 @@
       <workItem from="1702322121402" duration="4390000" />
       <workItem from="1702328307343" duration="3975000" />
       <workItem from="1702650706927" duration="401000" />
+      <workItem from="1703091510137" duration="55000" />
+      <workItem from="1703108694908" duration="127000" />
+      <workItem from="1703108923881" duration="401000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit with working basic GUI and basic server">
       <option name="closed" value="true" />

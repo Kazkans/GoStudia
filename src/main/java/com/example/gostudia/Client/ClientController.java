@@ -1,6 +1,7 @@
 package com.example.gostudia.Client;
 
 import com.example.gostudia.StateField;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -20,14 +21,15 @@ public class ClientController implements Initializable{
     private Pane pane;
     @FXML
     private Label colorLabel;
+    @FXML
+    public Label turnLabel;
 
     float marginY=40f;
     float marginX=200f;
-
     float cellSize=30f;
-    private PrintWriter out = null;
-    private BufferedReader in;
-    private ObjectInputStream ois;
+    int size=19;
+
+    private ClientHandler cm;
 
     public void createHLine(float y) {
         Line line = new Line();
@@ -50,7 +52,7 @@ public class ClientController implements Initializable{
 
     BoardField[][] board = new BoardField[19][19];
     public void createButton(float x, float y, int i, int j) {
-        BoardField circle = new BoardField(i, j, out);
+        BoardField circle = new BoardField(i, j, cm);
         circle.setCenterX(x);
         circle.setCenterY(y);
         circle.setRadius(cellSize/1.41/2);
@@ -73,15 +75,22 @@ public class ClientController implements Initializable{
             }
         }
     }
+    public boolean isConnected() {
+        return cm != null;
+    }
     public void connect() {
-        try  {
-            Socket socket = new Socket("localhost", 4444);
-            // Wysylanie do serwera
-            out = new PrintWriter(socket.getOutputStream(), true);
-            // Odbieranie z serwera
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            ois = new ObjectInputStream(socket.getInputStream());
+        try {
+            cm = new ClientHandler(new Socket("localhost", 4444), size) {
+                @Override
+                public void updateTurn(boolean mine) {
+                    setTurnLabel(mine);
+                }
 
+                @Override
+                public void updateField(int i, int j, StateField state) {
+                    board[i][j].update(state);
+                }
+            };
         } catch (UnknownHostException ex) {
             System.out.println("Server not found: " + ex.getMessage());
             System.exit(-1);
@@ -92,44 +101,29 @@ public class ClientController implements Initializable{
     }
 
     public void handlePassAction() {
-        if(out!=null)
-            out.println("pass");
+        cm.sendPass();
     }
 
-    /**
-     * Waits for input from server and sets label to color which got
-     */
-    public void setColorLabel() {
-        Scanner scan = new Scanner(in);
-        String inputStr = scan.nextLine().strip();
-        colorLabel.setText(inputStr);
+    public void setTurnLabel(boolean mine) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                turnLabel.setText(mine ? "Your turn" : "");
+            }
+        });
     }
-    public void handelConnectAction() {
-        if(out==null) {
-            connect();
+
+    public void setColorLabel() {
+        if(isConnected())
+            colorLabel.setText(cm.getColor());
+    }
+
+    public void handleConnectionAction() {
+        if(!isConnected()) {
+            connect(); // creates cm
             setColorLabel();
             createFields();
-            (new UpdateServerThread()).start();
-        }
-    }
-
-    /**
-     * Thread to updates the board upon input form server
-     */
-    public class UpdateServerThread extends Thread {
-        public void run() {
-            while(true) {
-                try {
-                    StateField[][] stateBoard = (StateField[][]) ois.readObject();
-                    for(int i=0;i<19;i++) {
-                        for(int j=0;j<19;j++) {
-                            board[i][j].update(stateBoard[i][j]);
-                        }
-                    }
-                } catch (IOException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            cm.start();
         }
     }
 

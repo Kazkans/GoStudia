@@ -9,19 +9,29 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gostudia.Client.ClientController">
     <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <Label fx:id="colorLabel">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font></Label>
-         </children>
-      </HBox>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <Label fx:id="colorLabel">
+                            <font>
+                                <Font name="System Bold" size="19.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="turnLabel" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
         <Pane fx:id="pane" prefHeight="700.0" prefWidth="640.0" />
       <HBox alignment="CENTER" prefHeight="28.0" prefWidth="640.0">
          <children>
             <Button mnemonicParsing="false" onAction="#handlePassAction" text="Pass" />
-              <Button mnemonicParsing="false" onAction="#handelConnectAction" text="Connect" />
+              <Button mnemonicParsing="false" onAction="#handleConnectionAction" text="Connect" />
          </children>
       </HBox>
     </children>
