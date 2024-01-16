@@ -9,4 +9,8 @@ module com.example.gostudia {
     opens com.example.gostudia.Client to javafx.fxml;
     exports com.example.gostudia.Server;
     opens com.example.gostudia.Server to javafx.fxml;
+    exports com.example.gostudia.Server.InputOperations;
+    opens com.example.gostudia.Server.InputOperations to javafx.fxml;
+    exports com.example.gostudia.Server.Players;
+    opens com.example.gostudia.Server.Players to javafx.fxml;
 }

@@ -4,6 +4,7 @@ import com.example.gostudia.StateField;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -14,9 +15,16 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class ClientController implements Initializable{
+    @FXML
+    public Button surrenderButton;
+    @FXML
+    public Button passButton;
+    @FXML
+    public Button connectButton;
+    @FXML
+    public Button botButton;
     @FXML
     private Pane pane;
     @FXML
@@ -85,6 +93,10 @@ public class ClientController implements Initializable{
                 public void updateTurn(boolean mine) {
                     setTurnLabel(mine);
                 }
+                @Override
+                public void updateLabel(String s) {
+                    setLabel(s);
+                }
 
                 @Override
                 public void updateField(int i, int j, StateField state) {
@@ -103,14 +115,14 @@ public class ClientController implements Initializable{
     public void handlePassAction() {
         cm.sendPass();
     }
-
+    public void handleSurrenderAction() {
+        cm.sendSurrender();
+    }
     public void setTurnLabel(boolean mine) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                turnLabel.setText(mine ? "Your turn" : "");
-            }
-        });
+        Platform.runLater(() -> turnLabel.setText(mine ? "Your turn" : ""));
+    }
+    public void setLabel(String s) {
+        Platform.runLater(() -> turnLabel.setText(s));
     }
 
     public void setColorLabel() {
@@ -118,11 +130,20 @@ public class ClientController implements Initializable{
             colorLabel.setText(cm.getColor());
     }
 
+    public void setButtonsVisibility(boolean visibility) {
+        surrenderButton.setVisible(visibility);
+        passButton.setVisible(visibility);
+
+        botButton.setVisible(!visibility);
+        connectButton.setVisible(!visibility);
+    }
+
     public void handleConnectionAction() {
         if(!isConnected()) {
             connect(); // creates cm
             setColorLabel();
             createFields();
+            setButtonsVisibility(true);
             cm.start();
         }
     }
@@ -136,7 +157,12 @@ public class ClientController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         createBoard();
+        setButtonsVisibility(false);
     }
 
 
+    public void handleConnectionBotAction() {
+        handleConnectionAction();
+        cm.sendBot();
+    }
 }

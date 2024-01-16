@@ -13,6 +13,12 @@ public class Move {
         state = StateField.EMPTY;
     }
 
+    public Move(Move m) {
+        this.x=m.x;
+        this.y=m.y;
+        this.state=m.state;
+    }
+
     public int getX() {
         return x;
     }

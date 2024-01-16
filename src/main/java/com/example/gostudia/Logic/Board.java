@@ -39,6 +39,32 @@ public class Board {
         }
     }
 
+    public Board(Board b) {
+        this.size = b.size;
+        this.koMove = new Move(b.koMove);
+
+        board = new Field[size][size];
+        koBoard = new StateField[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j] = new Field(b.board[i][j].getState());
+                koBoard[i][j] = b.koBoard[i][j];
+            }
+        }
+
+        // Set neighbours for each field
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                for (int k = 0; k < 4; k++) {
+                    try {
+                        board[i][j].getNeighbours().add(board[i+((1-k%2)*(k-1))][j+((k%2)*(k-2))]);
+                    } catch (IndexOutOfBoundsException e) {}
+                }
+            }
+        }
+
+    }
+
     public boolean place(int x, int y, StateField state) {
         if (state != StateField.EMPTY) {
             if (board[x][y].getState() == StateField.EMPTY) {

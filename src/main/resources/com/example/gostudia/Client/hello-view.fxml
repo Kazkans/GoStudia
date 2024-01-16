@@ -30,8 +30,10 @@
         <Pane fx:id="pane" prefHeight="700.0" prefWidth="640.0" />
       <HBox alignment="CENTER" prefHeight="28.0" prefWidth="640.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handlePassAction" text="Pass" />
-              <Button mnemonicParsing="false" onAction="#handleConnectionAction" text="Connect" />
+            <Button fx:id="surrenderButton" mnemonicParsing="false" onAction="#handleSurrenderAction" text="Surrender" />
+            <Button fx:id="passButton" mnemonicParsing="false" onAction="#handlePassAction" text="Pass" />
+             <Button fx:id="connectButton" mnemonicParsing="false" onAction="#handleConnectionAction" text="Connect" />
+             <Button fx:id="botButton" mnemonicParsing="false" onAction="#handleConnectionBotAction" text="Play with Bot" />
          </children>
       </HBox>
     </children>

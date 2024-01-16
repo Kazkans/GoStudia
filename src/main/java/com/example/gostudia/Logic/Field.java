@@ -15,6 +15,11 @@ public class Field {
         neighbours = new ArrayList<>();
     }
 
+    public Field(StateField color) {
+        state = color;
+        neighbours = new ArrayList<>();
+    }
+
     public List<Field> getNeighbours() {
         return neighbours;
     }

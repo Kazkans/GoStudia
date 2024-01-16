@@ -1,6 +1,5 @@
 package com.example.gostudia.Client;
 
-import com.example.gostudia.Server.Signal;
 import com.example.gostudia.StateField;
 
 import java.io.*;
@@ -36,14 +35,12 @@ public abstract class ClientHandler extends Thread {
     public void run() {
         while(true) {
             try {
-                Signal s = (Signal) ois.readObject();
-                switch(s.getType()) {
-                    case BOARD:
-                        updateBoard((StateField[][]) s.getObject());
-                        break;
-                    case TURN:
-                        updateTurn((Boolean) s.getObject());
-                        break;
+                Object obj = ois.readObject();
+                switch(obj) {
+                    case String s -> updateLabel(s);
+                    case Boolean b -> updateTurn(b);
+                    case StateField[][] b -> updateBoard(b);
+                    default -> throw new ClassNotFoundException();
                 }
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
@@ -55,11 +52,16 @@ public abstract class ClientHandler extends Thread {
     public void sendMove(int i, int j) {
         out.println(i +" "+ j);
     }
+    public void sendBot() {
+        out.println("bot");
+    }
 
     public void sendPass() {
         out.println("pass");
     }
-
+    public void sendSurrender() {
+        out.println("surrender");
+    }
     private void updateBoard(StateField[][] stateBoard) {
         for(int i=0;i<size;i++) {
             for(int j=0;j<size;j++){
@@ -68,6 +70,7 @@ public abstract class ClientHandler extends Thread {
         }
     }
 
+    public abstract void updateLabel(String s);
     public abstract void updateTurn(boolean mine);
     public abstract void updateField(int i, int j, StateField state);
 }

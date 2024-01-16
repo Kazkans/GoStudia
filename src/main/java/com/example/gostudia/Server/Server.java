@@ -1,92 +1,108 @@
 package com.example.gostudia.Server;
 
-import com.example.gostudia.Logic.Board;
+import com.example.gostudia.Server.Players.BotPlayer;
+import com.example.gostudia.Server.Players.ClientPlayer;
+import com.example.gostudia.Server.Players.IPlayer;
 import com.example.gostudia.StateField;
 
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
-    private static Board board = new Board(19);
+   // private static Board board = new Board(19);
 
-    public static int consecutivePassess=0;
+    public static InternalState internal = new InternalState();
+
+    static class ClientWait implements Callable<IPlayer> {
+        private final ServerSocket serverSocket;
+        public ClientWait(ServerSocket serverSocket) {
+            this.serverSocket = serverSocket;
+        }
+        @Override
+        public IPlayer call() throws Exception {
+            Socket socket = serverSocket.accept();
+            System.out.println("White connected");
+            return new ClientPlayer(socket, StateField.WHITE);
+        }
+    }
+    static class BotWait implements Callable<IPlayer> {
+        private final ClientPlayer clientPlayer;
+        public BotWait(ClientPlayer clientPlayer) {
+            this.clientPlayer = clientPlayer;
+        }
+        @Override
+        public IPlayer call() throws Exception {
+            clientPlayer.waitBot();
+            return new BotPlayer(StateField.WHITE);
+        }
+    }
     public static void main(String[] args) {
-        SocketStreams blackStreams = null;
-        SocketStreams whiteStreams = null;
+        ClientPlayer blackPlayer = null;
+        IPlayer whitePlayer = null;
 
         try (ServerSocket serverSocket = new ServerSocket(4444)) {
 
             System.out.println("Server is listening on port 4444");
 
-            while (true) {
-                Socket socket = serverSocket.accept();
-                System.out.println("New client connected");
-                if(blackStreams == null) {
-                    System.out.println("Black connected");
-                    blackStreams = new SocketStreams(socket);
-                    blackStreams.out.println("You are black colour");
-                } else if(whiteStreams == null) {
-                    System.out.println("White connected");
-                    whiteStreams = new SocketStreams(socket);
-                    whiteStreams.out.println("You are white colour");
-                }
-                if(blackStreams!=null && whiteStreams!=null)
-                    startGame(blackStreams, whiteStreams);
-            }
+            Socket socket = serverSocket.accept();
+            System.out.println("Black connected");
+            blackPlayer = new ClientPlayer(socket, StateField.BLACK);
+
+            // waiting for engine input
+            // waiting for second player
+            ExecutorService executorService = Executors.newFixedThreadPool(2);
+            List<Callable<IPlayer>> taskList = new ArrayList<>();
+            taskList.add(new BotWait(blackPlayer));
+            taskList.add(new ClientWait(serverSocket));
+            whitePlayer = executorService.invokeAny(taskList);
+            executorService.shutdown();
+
+            System.out.println("GAME STARTED");
+
+            startGame(blackPlayer, whitePlayer);
 
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
             ex.printStackTrace();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static void startGame(SocketStreams blackStreams, SocketStreams whiteStreams) {
-        while(true) {
-            move(blackStreams, whiteStreams, StateField.BLACK);
-            move(whiteStreams, blackStreams, StateField.WHITE);
+    public static void startGame(IPlayer blackStreams, IPlayer whiteStreams) throws IOException {
+        while(!internal.ended) {
+            move(blackStreams, whiteStreams);
+            move(whiteStreams, blackStreams);
         }
+
+        blackStreams.sendEnd();
+        whiteStreams.sendEnd();
     }
-    public static void move(SocketStreams mainStreams, SocketStreams sideStreams, StateField color) {
+    public static void move(IPlayer mainPlayer, IPlayer sidePlayer) {
+        if(internal.ended)
+            return;
+
         try {
             // skips bytes that were sent before turn
-            mainStreams.input.skip(mainStreams.input.available());
-            mainStreams.oos.writeObject(new Signal(true));
+            mainPlayer.sendActiveTurn(true);
 
-            Scanner scan = new Scanner(mainStreams.input);
-            while (true) {
-                String inputStr = scan.nextLine().strip();
-                System.out.println(inputStr);
-                if (inputStr.equals("pass")) {
-                    System.out.println("pass: " + color);
-                    consecutivePassess+=1;
-                    if(consecutivePassess==2) {
-                      //  endGame();
-                    }
-                    return;
-                } else {
-                    consecutivePassess = 0;
-                    String[] inputs = inputStr.split(" ");
-                    int x = Integer.parseInt(inputs[0]);
-                    int y = Integer.parseInt(inputs[1]);
-                    System.out.println("list: " + color + " " + x + " " + y);
+            while(mainPlayer.getInput().execute(internal, sidePlayer));
 
-                    if (!board.place(x, y, color))
-                        continue;
+            mainPlayer.sendActiveTurn(false);
 
-                    Signal s = new Signal(board.getBoard());
-
-                    mainStreams.oos.writeObject(s);
-                    sideStreams.oos.writeObject(s);
-
-                    mainStreams.oos.writeObject(new Signal(false));
-
-                    return;
-                }
-            }
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
             ex.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
