@@ -11,7 +11,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<junit.version>5.9.2</junit.version>  </properties>
+    <junit.version>5.9.2</junit.version>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -24,8 +25,19 @@
       <artifactId>javafx-fxml</artifactId>
       <version>20.0.1</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>6.4.1.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>3.3.2</version>
+    </dependency>
 
-<dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
@@ -36,7 +48,8 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>  </dependencies>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>

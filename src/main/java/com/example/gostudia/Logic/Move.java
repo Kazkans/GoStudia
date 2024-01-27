@@ -3,9 +3,9 @@ package com.example.gostudia.Logic;
 import com.example.gostudia.StateField;
 
 public class Move {
-    private int x;
-    private int y;
-    private StateField state;
+    protected int x;
+    protected int y;
+    protected StateField state;
 
     public Move() {
         x = 0;

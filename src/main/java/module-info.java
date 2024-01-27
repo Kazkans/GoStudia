@@ -1,7 +1,8 @@
 module com.example.gostudia {
     requires javafx.controls;
     requires javafx.fxml;
-
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
 
     opens com.example.gostudia to javafx.fxml;
     exports com.example.gostudia;
@@ -13,4 +14,5 @@ module com.example.gostudia {
     opens com.example.gostudia.Server.InputOperations to javafx.fxml;
     exports com.example.gostudia.Server.Players;
     opens com.example.gostudia.Server.Players to javafx.fxml;
+    opens com.example.gostudia.Database to org.hibernate.orm.core;
 }
