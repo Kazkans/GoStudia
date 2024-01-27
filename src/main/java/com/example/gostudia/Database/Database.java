@@ -1,8 +1,5 @@
 package com.example.gostudia.Database;
 
-import com.example.gostudia.Logic.Move;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface Database {
@@ -15,4 +12,5 @@ public interface Database {
     List<GameEntity> readGames();
     GameEntity readGame(long id);
     void updateGame(GameEntity game);
+    void close();
 }

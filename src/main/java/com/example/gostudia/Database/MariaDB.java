@@ -1,6 +1,5 @@
 package com.example.gostudia.Database;
 
-import com.example.gostudia.Logic.Move;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -68,5 +67,10 @@ public class MariaDB implements Database{
     @Override
     public void updateGame(GameEntity game) {
         entityManager.merge(game);
+    }
+
+    @Override
+    public void close() {
+        entityManager.close();
     }
 }

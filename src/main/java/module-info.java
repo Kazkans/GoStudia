@@ -14,5 +14,7 @@ module com.example.gostudia {
     opens com.example.gostudia.Server.InputOperations to javafx.fxml;
     exports com.example.gostudia.Server.Players;
     opens com.example.gostudia.Server.Players to javafx.fxml;
+    exports com.example.gostudia.Database;
     opens com.example.gostudia.Database to org.hibernate.orm.core;
+
 }

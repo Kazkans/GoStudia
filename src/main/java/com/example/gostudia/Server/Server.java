@@ -1,5 +1,8 @@
 package com.example.gostudia.Server;
 
+import com.example.gostudia.Database.Database;
+import com.example.gostudia.Database.GameEntity;
+import com.example.gostudia.Database.MariaDB;
 import com.example.gostudia.Server.Players.BotPlayer;
 import com.example.gostudia.Server.Players.ClientPlayer;
 import com.example.gostudia.Server.Players.IPlayer;
@@ -7,6 +10,7 @@ import com.example.gostudia.StateField;
 
 import java.io.*;
 import java.net.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -18,6 +22,7 @@ public class Server {
    // private static Board board = new Board(19);
 
     public static InternalState internal = new InternalState();
+    public static Database database = MariaDB.getInstance();
 
     static class ClientWait implements Callable<IPlayer> {
         private final ServerSocket serverSocket;
@@ -67,6 +72,8 @@ public class Server {
 
             startGame(blackPlayer, whitePlayer);
 
+            database.close();
+
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
             ex.printStackTrace();
@@ -78,9 +85,25 @@ public class Server {
     }
 
     public static void startGame(IPlayer blackStreams, IPlayer whiteStreams) throws IOException {
-        while(!internal.ended) {
-            move(blackStreams, whiteStreams);
-            move(whiteStreams, blackStreams);
+        try {
+            database.beginTransaction();
+            internal.currentGame = new GameEntity();
+
+            database.saveGame(internal.currentGame);
+
+            while (!internal.ended) {
+                move(blackStreams, whiteStreams);
+                move(whiteStreams, blackStreams);
+            }
+
+            internal.currentGame.setEndTime(LocalDateTime.now());
+            internal.currentGame.setWinner(internal.winner);
+            database.updateGame(internal.currentGame);
+            database.commit();
+
+        } catch (Exception e) {
+            database.rollback();
+            throw e;
         }
 
         blackStreams.sendEnd();
@@ -94,7 +117,7 @@ public class Server {
             // skips bytes that were sent before turn
             mainPlayer.sendActiveTurn(true);
 
-            while(mainPlayer.getInput().execute(internal, sidePlayer));
+            while(mainPlayer.getInput().execute(internal, sidePlayer, database));
 
             mainPlayer.sendActiveTurn(false);
 
