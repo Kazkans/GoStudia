@@ -9,7 +9,7 @@ public interface Database {
     void saveGame(GameEntity gameEntity);
     void saveMove(MoveEntity move);
     MoveEntity readMove(GameEntity game, int number);
-    List<GameEntity> readGames();
+    List<GameEntity> read10Games(int page);
     GameEntity readGame(long id);
     void updateGame(GameEntity game);
     void close();

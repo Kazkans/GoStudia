@@ -3,9 +3,7 @@ package com.example.gostudia.Server;
 import com.example.gostudia.Database.Database;
 import com.example.gostudia.Database.GameEntity;
 import com.example.gostudia.Database.MariaDB;
-import com.example.gostudia.Server.Players.BotPlayer;
-import com.example.gostudia.Server.Players.ClientPlayer;
-import com.example.gostudia.Server.Players.IPlayer;
+import com.example.gostudia.Server.Players.*;
 import com.example.gostudia.StateField;
 
 import java.io.*;
@@ -43,8 +41,21 @@ public class Server {
         }
         @Override
         public IPlayer call() throws Exception {
-            clientPlayer.waitBot();
+            clientPlayer.waitFor("bot");
             return new BotPlayer(StateField.WHITE);
+        }
+    }
+
+    static class ReplayWait implements Callable<IPlayer> {
+        private final ClientPlayer clientPlayer;
+
+        public ReplayWait(ClientPlayer clientPlayer) {
+            this.clientPlayer = clientPlayer;
+        }
+        @Override
+        public IPlayer call() throws Exception {
+            clientPlayer.waitFor("rep");
+            return new ReplayPlayer(database, internal);
         }
     }
     public static void main(String[] args) {
@@ -61,16 +72,37 @@ public class Server {
 
             // waiting for engine input
             // waiting for second player
-            ExecutorService executorService = Executors.newFixedThreadPool(2);
+
             List<Callable<IPlayer>> taskList = new ArrayList<>();
             taskList.add(new BotWait(blackPlayer));
             taskList.add(new ClientWait(serverSocket));
+            taskList.add(new ReplayWait(blackPlayer));
+            ExecutorService executorService = Executors.newFixedThreadPool(taskList.size());
             whitePlayer = executorService.invokeAny(taskList);
             executorService.shutdown();
 
-            System.out.println("GAME STARTED");
+            if (whitePlayer instanceof ReplayPlayer) {
+                String inputStr = "p0";
+                int page;
+                do {
+                    page = Integer.parseInt(inputStr.substring(1));
+                    blackPlayer.sendGames(database.read10Games(page));
+                    System.out.println("Send games");
+                    inputStr = blackPlayer.readLine();
+                    System.out.println("Received: " + inputStr);
+                }while(inputStr.charAt(0) < 48 || inputStr.charAt(0) > 57);
 
-            startGame(blackPlayer, whitePlayer);
+                internal.currentGame = database.readGame(Integer.parseInt(inputStr));
+
+                System.out.println("REPLAY STARTED");
+
+                startReplay(blackPlayer, whitePlayer);
+            }
+            else {
+                System.out.println("GAME STARTED");
+
+                startGame(blackPlayer, whitePlayer);
+            }
 
             database.close();
 
@@ -108,6 +140,16 @@ public class Server {
 
         blackStreams.sendEnd();
         whiteStreams.sendEnd();
+    }
+
+    public static void startReplay(IPlayer watch, IPlayer replay) throws IOException, InterruptedException {
+        while (!internal.ended) {
+            move(replay, watch);
+            Thread.sleep(1000);
+        }
+
+        watch.sendEnd();
+        replay.sendEnd();
     }
     public static void move(IPlayer mainPlayer, IPlayer sidePlayer) {
         if(internal.ended)

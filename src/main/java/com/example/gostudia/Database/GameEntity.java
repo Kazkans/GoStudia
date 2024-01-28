@@ -2,11 +2,12 @@ package com.example.gostudia.Database;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "games")
-public class GameEntity {
+public class GameEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

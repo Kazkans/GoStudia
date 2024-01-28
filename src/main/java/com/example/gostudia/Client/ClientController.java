@@ -1,19 +1,27 @@
 package com.example.gostudia.Client;
 
+import com.example.gostudia.Database.GameEntity;
 import com.example.gostudia.StateField;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable{
@@ -25,6 +33,8 @@ public class ClientController implements Initializable{
     public Button connectButton;
     @FXML
     public Button botButton;
+    @FXML
+    public Button replayButton;
     @FXML
     private Pane pane;
     @FXML
@@ -97,7 +107,6 @@ public class ClientController implements Initializable{
                 public void updateLabel(String s) {
                     setLabel(s);
                 }
-
                 @Override
                 public void updateField(int i, int j, StateField state) {
                     board[i][j].update(state);
@@ -136,14 +145,19 @@ public class ClientController implements Initializable{
 
         botButton.setVisible(!visibility);
         connectButton.setVisible(!visibility);
+        replayButton.setVisible(!visibility);
+    }
+
+    private void connectAndSetup() {
+        connect(); // creates cm
+        setColorLabel();
+        createFields();
+        setButtonsVisibility(true);
     }
 
     public void handleConnectionAction() {
         if(!isConnected()) {
-            connect(); // creates cm
-            setColorLabel();
-            createFields();
-            setButtonsVisibility(true);
+            connectAndSetup();
             cm.start();
         }
     }
@@ -164,5 +178,22 @@ public class ClientController implements Initializable{
     public void handleConnectionBotAction() {
         handleConnectionAction();
         cm.sendBot();
+    }
+
+    public void handleReplayAction() throws IOException{
+        connectAndSetup();
+
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("choose-game-view.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        Stage dialog = new Stage();
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setScene(scene);
+        dialog.show();
+
+        cm.sendReplay();
+
+        ((ChooseController) loader.getController()).setClientHandler(cm);
     }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 public class MariaDB implements Database{
@@ -46,7 +47,7 @@ public class MariaDB implements Database{
     }
 
     @Override
-    public MoveEntity readMove(GameEntity game, int number) {
+    public MoveEntity readMove(GameEntity game, int number) throws NoSuchElementException {
         Query query = entityManager.createQuery(
                 "from MoveEntity where game= :game_entity and moveNumber= :number");
         query.setParameter("game_entity", game);
@@ -55,8 +56,11 @@ public class MariaDB implements Database{
     }
 
     @Override
-    public List<GameEntity> readGames() {
-        return entityManager.createQuery("from GameEntity").getResultList();
+    public List<GameEntity> read10Games(int page) {
+        Query query = entityManager.createQuery("from GameEntity");
+        query.setFirstResult(page*10);
+        query.setMaxResults(10);
+        return query.getResultList();
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.example.gostudia.Client;
 
+import com.example.gostudia.Database.GameEntity;
 import com.example.gostudia.StateField;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,6 +29,14 @@ public abstract class ClientHandler extends Thread {
     private void readColor() {
         Scanner scan = new Scanner(in);
         color = scan.nextLine().strip();
+    }
+
+    public List<GameEntity> readGames() {
+        try {
+            return (List<GameEntity>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     public String getColor() {
         return color;
@@ -55,12 +65,20 @@ public abstract class ClientHandler extends Thread {
     public void sendBot() {
         out.println("bot");
     }
-
+    public void sendReplay() {
+        out.println("rep");
+    }
     public void sendPass() {
         out.println("pass");
     }
     public void sendSurrender() {
         out.println("surrender");
+    }
+    public void sendPage(int page) {
+        out.println("p" + page);
+    }
+    public void sendId(long id) {
+        out.println(id);
     }
     private void updateBoard(StateField[][] stateBoard) {
         for(int i=0;i<size;i++) {

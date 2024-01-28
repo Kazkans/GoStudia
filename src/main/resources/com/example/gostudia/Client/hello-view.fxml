@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gostudia.Client.ClientController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gostudia.Client.ClientController">
     <children>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
@@ -34,6 +34,7 @@
             <Button fx:id="passButton" mnemonicParsing="false" onAction="#handlePassAction" text="Pass" />
              <Button fx:id="connectButton" mnemonicParsing="false" onAction="#handleConnectionAction" text="Connect" />
              <Button fx:id="botButton" mnemonicParsing="false" onAction="#handleConnectionBotAction" text="Play with Bot" />
+            <Button fx:id="replayButton" mnemonicParsing="false" onAction="#handleReplayAction" text="Replay game" />
          </children>
       </HBox>
     </children>
