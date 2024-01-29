@@ -1,12 +1,13 @@
 package com.example.gostudia.Logic;
 
+import com.example.gostudia.Database.MoveEntity;
 import com.example.gostudia.StateField;
 
 public class Board {
-    private Field[][] board;
-    private StateField[][] koBoard;
-    private Move koMove;
-    private int size;
+    private final Field[][] board;
+    private final StateField[][] koBoard;
+    private final Move koMove;
+    private final int size;
 
     public Board(int size) {
         if (size < 3)
@@ -33,7 +34,7 @@ public class Board {
                 for (int k = 0; k < 4; k++) {
                     try {
                         board[i][j].getNeighbours().add(board[i+((1-k%2)*(k-1))][j+((k%2)*(k-2))]);
-                    } catch (IndexOutOfBoundsException e) {}
+                    } catch (IndexOutOfBoundsException ignored) {}
                 }
             }
         }
@@ -58,13 +59,16 @@ public class Board {
                 for (int k = 0; k < 4; k++) {
                     try {
                         board[i][j].getNeighbours().add(board[i+((1-k%2)*(k-1))][j+((k%2)*(k-2))]);
-                    } catch (IndexOutOfBoundsException e) {}
+                    } catch (IndexOutOfBoundsException ignored) {}
                 }
             }
         }
 
     }
 
+    public boolean place(MoveEntity m) {
+        return place(m.getX(), m.getY(), m.getState());
+    }
     public boolean place(int x, int y, StateField state) {
         if (state != StateField.EMPTY) {
             if (board[x][y].getState() == StateField.EMPTY) {

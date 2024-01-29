@@ -4,17 +4,21 @@ import com.example.gostudia.StateField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.io.PrintWriter;
-
 /**
  * Class represents one board field. It handles sending info upon clicking and drawing it.
  */
 public class BoardField extends Circle {
-    StateField stateField;
-    public BoardField(int i, int j, ClientHandler cm) {
+    private final int i;
+    private final int j;
+    public BoardField(int i, int j) {
+        this.i=i;
+        this.j=j;
+    }
+
+    public void setHandler(ClientHandler cm) {
         this.setOnMouseClicked(event ->  {
             // sends signal
-            cm.sendMove(i, j);
+            cm.sendMove(i,j);
         });
     }
     public void update(StateField s) {

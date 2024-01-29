@@ -2,18 +2,14 @@ package com.example.gostudia.Client;
 
 import com.example.gostudia.Database.GameEntity;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class ChooseController{
 
@@ -67,7 +63,7 @@ public class ChooseController{
             button.setOnAction(actionEvent -> {
                 cm.sendId(game.getId());
                 cm.start();
-                //((Stage) scrollPane.getScene().getWindow()).close();
+                ((Stage) scrollPane.getScene().getWindow()).close();
             });
             contentBox.getChildren().add(button);
         }

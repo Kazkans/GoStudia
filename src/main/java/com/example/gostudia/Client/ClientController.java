@@ -1,12 +1,10 @@
 package com.example.gostudia.Client;
 
-import com.example.gostudia.Database.GameEntity;
 import com.example.gostudia.StateField;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,14 +12,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable{
@@ -70,7 +66,8 @@ public class ClientController implements Initializable{
 
     BoardField[][] board = new BoardField[19][19];
     public void createButton(float x, float y, int i, int j) {
-        BoardField circle = new BoardField(i, j, cm);
+        BoardField circle = new BoardField(i, j);
+
         circle.setCenterX(x);
         circle.setCenterY(y);
         circle.setRadius(cellSize/1.41/2);
@@ -78,6 +75,17 @@ public class ClientController implements Initializable{
         board[i][j]=circle;
 
         pane.getChildren().addAll(circle);
+    }
+
+    public void connectButtons() {
+        for(BoardField[] row : board)
+            for(BoardField b : row)
+                b.setHandler(cm);
+    }
+    public void clearButtons() {
+        for(BoardField[] row : board)
+            for(BoardField b : row)
+                b.update(StateField.EMPTY);
     }
     public void createBoard() {
         for(int i=0;i<19;i++) {
@@ -96,9 +104,9 @@ public class ClientController implements Initializable{
     public boolean isConnected() {
         return cm != null;
     }
-    public void connect() {
+    public void connect(int port, boolean mode) {
         try {
-            cm = new ClientHandler(new Socket("localhost", 4444), size) {
+            cm = new ClientHandler(new Socket("localhost", port), size, mode) {
                 @Override
                 public void updateTurn(boolean mine) {
                     setTurnLabel(mine);
@@ -110,6 +118,13 @@ public class ClientController implements Initializable{
                 @Override
                 public void updateField(int i, int j, StateField state) {
                     board[i][j].update(state);
+                }
+
+                @Override
+                public void detach() {
+                    cm=null;
+                    clearTurnLabel();
+                    setButtonsVisibility(false);
                 }
             };
         } catch (UnknownHostException ex) {
@@ -130,6 +145,9 @@ public class ClientController implements Initializable{
     public void setTurnLabel(boolean mine) {
         Platform.runLater(() -> turnLabel.setText(mine ? "Your turn" : ""));
     }
+    public void clearTurnLabel() {
+        Platform.runLater(() -> turnLabel.setText(""));
+    }
     public void setLabel(String s) {
         Platform.runLater(() -> turnLabel.setText(s));
     }
@@ -138,7 +156,6 @@ public class ClientController implements Initializable{
         if(isConnected())
             colorLabel.setText(cm.getColor());
     }
-
     public void setButtonsVisibility(boolean visibility) {
         surrenderButton.setVisible(visibility);
         passButton.setVisible(visibility);
@@ -148,29 +165,25 @@ public class ClientController implements Initializable{
         replayButton.setVisible(!visibility);
     }
 
-    private void connectAndSetup() {
-        connect(); // creates cm
+    private void connectAndSetup(int port, boolean mode) {
+        connect(port, mode); // creates cm
+        setLabel(""); // clear label
         setColorLabel();
-        createFields();
+        clearButtons();
+        connectButtons();
         setButtonsVisibility(true);
     }
 
     public void handleConnectionAction() {
         if(!isConnected()) {
-            connectAndSetup();
+            connectAndSetup(4444, true);
             cm.start();
         }
     }
-
-    /**
-     * Function called on initialization
-     *
-     * Function on init creates empty board
-     * @return void
-     **/
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         createBoard();
+        createFields();
         setButtonsVisibility(false);
     }
 
@@ -181,7 +194,7 @@ public class ClientController implements Initializable{
     }
 
     public void handleReplayAction() throws IOException{
-        connectAndSetup();
+        connectAndSetup(4445, false);
 
         FXMLLoader loader = new FXMLLoader(App.class.getResource("choose-game-view.fxml"));
         Scene scene = new Scene(loader.load());
@@ -191,8 +204,6 @@ public class ClientController implements Initializable{
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setScene(scene);
         dialog.show();
-
-        cm.sendReplay();
 
         ((ChooseController) loader.getController()).setClientHandler(cm);
     }

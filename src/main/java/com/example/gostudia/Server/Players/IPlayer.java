@@ -6,12 +6,14 @@ import com.example.gostudia.StateField;
 
 import java.io.IOException;
 
+@SuppressWarnings("ClassEscapesDefinedScope")
 public interface IPlayer {
-    public StateField getColor();
-    public void sendActiveTurn(boolean active) throws IOException;
-    public void sendBoard(Board board) throws IOException;
-    public void sendPass();
-    public void sendEnd() throws IOException;
-    public InputOperation getInput() throws IOException, ClassNotFoundException;
+    StateField getColor();
+    void sendActiveTurn(boolean active) throws IOException;
+    void sendBoard(Board board) throws IOException;
+    void sendPass();
+    void sendEnd() throws IOException;
+    InputOperation getInput() throws IOException, ClassNotFoundException;
+    void close() throws IOException;
 
 }

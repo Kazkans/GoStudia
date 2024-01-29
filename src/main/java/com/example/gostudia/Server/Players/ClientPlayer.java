@@ -1,6 +1,5 @@
 package com.example.gostudia.Server.Players;
 
-import com.example.gostudia.Database.GameEntity;
 import com.example.gostudia.Logic.Board;
 import com.example.gostudia.Server.InputOperations.InputOperation;
 import com.example.gostudia.Server.InputOperations.MoveOperation;
@@ -10,15 +9,17 @@ import com.example.gostudia.StateField;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
 import java.util.Scanner;
 
+@SuppressWarnings("ALL")
 public class ClientPlayer implements IPlayer{
     private final ObjectOutputStream oos;
     private final InputStream input;
     private final StateField color;
+    private final Socket socket;
 
     public ClientPlayer(Socket socket, StateField color) throws IOException {
+        this.socket = socket;
         this.color = color;
         //Wysylanie do socketa
         oos = new ObjectOutputStream(socket.getOutputStream());
@@ -58,22 +59,13 @@ public class ClientPlayer implements IPlayer{
         oos.writeObject("Game Ended");
     }
 
-    public void sendGames(List<GameEntity> list) throws IOException {
-        oos.writeObject(list);
-    }
-
-    public String readLine() throws IOException {
-        Scanner scan = new Scanner(input);
-        return scan.nextLine().strip();
-    }
-
-    public void waitFor(String in) throws IOException, InterruptedException {
+    public void waitBot() throws IOException, InterruptedException {
         input.skip(input.available());
         Scanner scan = new Scanner(input);
 
         while(true) {
             String inputStr = scan.nextLine().strip();
-            if (inputStr.equals(in))
+            if (inputStr.equals("bot"))
                 return;
             else
                 Thread.sleep(20);
@@ -100,5 +92,10 @@ public class ClientPlayer implements IPlayer{
 
             return new MoveOperation(x, y, this);
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        socket.close();
     }
 }

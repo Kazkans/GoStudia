@@ -7,9 +7,9 @@ import com.example.gostudia.Server.InputOperations.PassOperation;
 import com.example.gostudia.StateField;
 import javafx.util.Pair;
 
-import java.io.*;
 import java.util.Random;
 
+@SuppressWarnings("ClassEscapesDefinedScope")
 public class BotPlayer implements IPlayer{
     private final StateField color;
     private Board board;
@@ -40,11 +40,13 @@ public class BotPlayer implements IPlayer{
 
     @Override
     public void sendEnd() {}
+    @Override
+    public void close() {}
 
     // TODO: Implement proper evaluation
     public float eval(Board board) {
         Random random = new Random();
-        return 10-random.nextFloat(20);
+        return 10-random.nextFloat()*20;
     }
     @Override
     public InputOperation getInput() {
@@ -61,7 +63,7 @@ public class BotPlayer implements IPlayer{
         float depth = 8;
 
         Pair<Integer, Integer> bestMove = null;
-        float bestEval= Float.MAX_VALUE;
+        float bestEval= Float.MIN_VALUE;
 
         for(int i=0;i<numMove;i++) {
             Board tmp = new Board(board);
@@ -72,14 +74,14 @@ public class BotPlayer implements IPlayer{
             }
 
             float val = eval(tmp);
-            if(val<bestEval) {
+            if(val>bestEval) {
                 bestMove=first;
                 bestEval=val;
             }
         }
 
         if(bestMove==null || bestEval < threshold || (bestEval > 0 && beforePassed)) {
-            System.out.println("ENGINE PASSED");
+            System.out.println("ENGINE PASSED " + bestEval + " " + threshold + " " + beforePassed + " " + (bestMove==null));
             return new PassOperation();
         } else {
             System.out.println("MADE ENGINE MOVE " + bestMove.getKey() + " " + bestMove.getValue());
