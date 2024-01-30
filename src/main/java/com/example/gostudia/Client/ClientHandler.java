@@ -56,7 +56,6 @@ public abstract class ClientHandler extends Thread {
             } catch (IOException e){
                 detach();
                 return;
-                // TODO: safe return
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

@@ -93,8 +93,8 @@ public class BotPlayer implements IPlayer{
         int x;
         int y;
         do {
-            x = random.nextInt(19);
-            y = random.nextInt(19);
+            x = random.nextInt(board.getSize());
+            y = random.nextInt(board.getSize());
         } while(!board.place(x, y, color));
         return new Pair<>(x,y);
     }

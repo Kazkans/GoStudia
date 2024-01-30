@@ -76,7 +76,6 @@ public class ClientPlayer implements IPlayer{
     @Override
     public InputOperation getInput() throws IOException {
         input.skip(input.available());
-        oos.writeObject(true);
 
         Scanner scan = new Scanner(input);
         String inputStr = scan.nextLine().strip();
