@@ -18,7 +18,7 @@ public class TestUtils {
             throw new IllegalArgumentException("There has to be even");
 
         for (int i = 0; i < points.length; i+=2) {
-            assertEquals(state, board.getField(points[i], points[i+1]).getState());
+            assertEquals(state, board.getField(points[i], points[i+1]));
         }
     }
 
@@ -26,7 +26,7 @@ public class TestUtils {
         int size = board.getSize();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                switch (board.getField(j, i).getState()) {
+                switch (board.getField(j, i)) {
                     case BLACK -> System.out.print("X");
                     case WHITE -> System.out.print("O");
                     case EMPTY -> System.out.print("_");

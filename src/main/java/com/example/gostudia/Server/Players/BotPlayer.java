@@ -43,10 +43,8 @@ public class BotPlayer implements IPlayer{
     @Override
     public void close() {}
 
-    // TODO: Implement proper evaluation
     public float eval(Board board) {
-        Random random = new Random();
-        return 10-random.nextFloat()*20;
+        return board.calculatePoints(color);
     }
     @Override
     public InputOperation getInput() {
@@ -66,7 +64,7 @@ public class BotPlayer implements IPlayer{
         float bestEval= Float.MIN_VALUE;
 
         for(int i=0;i<numMove;i++) {
-            Board tmp = new Board(board);
+            Board tmp = board.copy();
 
             Pair<Integer, Integer> first = makeRandomMove(tmp, random);
             for(int j=0;j<depth;j++) {

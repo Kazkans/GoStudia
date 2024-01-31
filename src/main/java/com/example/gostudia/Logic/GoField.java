@@ -3,24 +3,28 @@ package com.example.gostudia.Logic;
 import com.example.gostudia.StateField;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class Field {
+public class GoField {
     private StateField state;
-    private List<Field> neighbours;
+    private final List<GoField> neighbours;
     private boolean checked;
+    private boolean alive;
+    private StateField territory = null;
 
-    public Field() {
+    public GoField() {
         state = StateField.EMPTY;
         neighbours = new ArrayList<>();
     }
 
-    public Field(StateField color) {
+    public GoField(StateField color) {
         state = color;
         neighbours = new ArrayList<>();
     }
 
-    public List<Field> getNeighbours() {
+    public List<GoField> getNeighbours() {
         return neighbours;
     }
 
@@ -43,7 +47,7 @@ public class Field {
                 return 1;
 
             int sum = 0;
-            for (Field neighbour : neighbours) {
+            for (GoField neighbour : neighbours) {
                 if (neighbour.getState() == before)
                     sum += neighbour.remove();
             }
@@ -62,7 +66,7 @@ public class Field {
         this.state = state;
         if (state != StateField.EMPTY) {
             int sum = 0;
-            for (Field neighbour : neighbours) {
+            for (GoField neighbour : neighbours) {
                 sum += neighbour.update(state.opposite());
             }
             return sum;
@@ -76,5 +80,40 @@ public class Field {
 
     public boolean isChecked() {
         return checked;
+    }
+
+    public boolean isAlive() {
+        if (state == StateField.EMPTY)
+            return false;
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        if (state != StateField.EMPTY)
+            this.alive = alive;
+    }
+
+    public StateField getTerritory() {
+        if (state != StateField.EMPTY)
+            return null;
+        return territory;
+    }
+
+    public void setTerritory(StateField territory) {
+        if (state == StateField.EMPTY)
+            this.territory = territory;
+    }
+
+    public Set<GoField> checkTerritory() {
+        Set<GoField> set = new HashSet<>();
+        set.add(this);
+        if (state == StateField.EMPTY) {
+            checked = true;
+            for (GoField neighbour : neighbours) {
+                if (!neighbour.isChecked())
+                    set.addAll(neighbour.checkTerritory());
+            }
+        }
+        return set;
     }
 }
