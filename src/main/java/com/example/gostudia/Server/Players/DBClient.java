@@ -1,6 +1,7 @@
 package com.example.gostudia.Server.Players;
 
 import com.example.gostudia.Database.GameEntity;
+import com.example.gostudia.Database.Winner;
 import com.example.gostudia.Logic.Board;
 import com.example.gostudia.Logic.GoBoard;
 
@@ -27,8 +28,8 @@ public class DBClient {
         oos.writeObject(list);
     }
 
-    public void sendEnd() throws IOException {
-        oos.writeObject("Game Ended");
+    public void sendEnd(Winner w) throws IOException {
+        oos.writeObject(w.toString());
     }
 
     public OptionalInt getPage() throws IOException {

@@ -1,6 +1,7 @@
 package com.example.gostudia;
 
 import com.example.gostudia.Logic.Board;
+import com.example.gostudia.Logic.GoBoard;
 import com.example.gostudia.Logic.Move;
 import com.example.gostudia.Server.InputOperations.InputOperation;
 import com.example.gostudia.Server.InputOperations.MoveOperation;
@@ -16,7 +17,7 @@ class BotPlayerTest {
     @Test
     void testBot() {
         BotPlayer b = new BotPlayer(StateField.WHITE);
-        Board board = new Board(9);
+        GoBoard board = new GoBoard(9);
         multiplePlace(board, StateField.BLACK,
                 0, 0, 0, 1, 1, 0, 1, 1);
         multiplePlace(board, StateField.WHITE,

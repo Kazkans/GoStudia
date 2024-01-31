@@ -103,8 +103,8 @@ public class ServerGame {
             throw e;
         }
 
-        blackStreams.sendEnd();
-        whiteStreams.sendEnd();
+        blackStreams.sendEnd(internal.winner);
+        whiteStreams.sendEnd(internal.winner);
     }
 
     private void move(IPlayer mainPlayer, IPlayer sidePlayer) {

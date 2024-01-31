@@ -1,5 +1,6 @@
 package com.example.gostudia.Server.Players;
 
+import com.example.gostudia.Database.Winner;
 import com.example.gostudia.Logic.Board;
 import com.example.gostudia.Server.InputOperations.InputOperation;
 import com.example.gostudia.Server.InputOperations.MoveOperation;
@@ -39,7 +40,7 @@ public class BotPlayer implements IPlayer{
     }
 
     @Override
-    public void sendEnd() {}
+    public void sendEnd(Winner w) {}
     @Override
     public void close() {}
 

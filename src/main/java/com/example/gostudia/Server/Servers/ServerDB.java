@@ -69,7 +69,7 @@ public class ServerDB implements Runnable {
             }
         }
 
-        watch.sendEnd();
+        watch.sendEnd(internal.winner);
         watch.close();
     }
 }

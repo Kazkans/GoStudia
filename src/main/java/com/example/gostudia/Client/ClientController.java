@@ -123,7 +123,6 @@ public class ClientController implements Initializable{
                 @Override
                 public void detach() {
                     cm=null;
-                    clearTurnLabel();
                     setButtonsVisibility(false);
                 }
             };
@@ -144,9 +143,6 @@ public class ClientController implements Initializable{
     }
     public void setTurnLabel(boolean mine) {
         Platform.runLater(() -> turnLabel.setText(mine ? "Your turn" : ""));
-    }
-    public void clearTurnLabel() {
-        Platform.runLater(() -> turnLabel.setText(""));
     }
     public void setLabel(String s) {
         Platform.runLater(() -> turnLabel.setText(s));

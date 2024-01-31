@@ -1,5 +1,6 @@
 package com.example.gostudia.Server.Players;
 
+import com.example.gostudia.Database.Winner;
 import com.example.gostudia.Logic.Board;
 import com.example.gostudia.Server.InputOperations.InputOperation;
 import com.example.gostudia.Server.InputOperations.MoveOperation;
@@ -55,8 +56,8 @@ public class ClientPlayer implements IPlayer{
     }
 
     @Override
-    public void sendEnd() throws IOException {
-        oos.writeObject("Game Ended");
+    public void sendEnd(Winner w) throws IOException {
+        oos.writeObject(w.toString());
     }
 
     public void waitBot() throws IOException, InterruptedException {
