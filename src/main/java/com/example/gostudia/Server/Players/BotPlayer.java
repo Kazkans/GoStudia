@@ -44,7 +44,7 @@ public class BotPlayer implements IPlayer{
     public void close() {}
 
     public float eval(Board board) {
-        return board.calculatePoints(color);
+        return board.calculatePoints(color) - board.calculatePoints(color.opposite());
     }
     @Override
     public InputOperation getInput() {

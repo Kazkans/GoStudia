@@ -9,18 +9,13 @@ import com.example.gostudia.StateField;
 public class SurrenderOperation implements InputOperation {
     @Override
     public boolean execute(InternalState internal, IPlayer sidePlayer, Database database) {
-        int blackPoints = internal.board.calculatePoints(StateField.BLACK);
-        int whitePoints = internal.board.calculatePoints(StateField.WHITE);
-        internal.ended=true;
-        if (blackPoints > whitePoints) {
-            internal.winner = Winner.B;
+        internal.ended = true;
+        Winner winner = Winner.D;
+        switch (sidePlayer.getColor()) {
+            case BLACK -> winner = Winner.B;
+            case WHITE -> winner = Winner.W;
         }
-        else if (blackPoints < whitePoints) {
-            internal.winner = Winner.W;
-        }
-        else {
-            internal.winner = Winner.D;
-        }
+        internal.winner = winner;
         return false;
     }
 }
