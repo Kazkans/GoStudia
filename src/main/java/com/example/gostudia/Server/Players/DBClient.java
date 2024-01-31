@@ -2,6 +2,7 @@ package com.example.gostudia.Server.Players;
 
 import com.example.gostudia.Database.GameEntity;
 import com.example.gostudia.Logic.Board;
+import com.example.gostudia.Logic.GoBoard;
 
 import java.io.*;
 import java.net.Socket;

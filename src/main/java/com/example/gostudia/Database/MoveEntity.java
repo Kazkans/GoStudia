@@ -1,6 +1,5 @@
 package com.example.gostudia.Database;
 
-import com.example.gostudia.Logic.Move;
 import com.example.gostudia.StateField;
 import jakarta.persistence.*;
 
